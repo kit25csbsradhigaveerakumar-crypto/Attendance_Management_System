@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="admin-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Oracle Academic COE</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
+      <li><a href="students.html">Students</a></li>
+      <li><a href="subjects.html">Subjects</a></li>
+      <li><a href="mark-attendance.html">Mark Attendance</a></li>
+      <li><a href="attendance-records.html">Records</a></li>
+      <li><a href="attendance-reports.html">Reports</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Faculty</strong> (<span id="navUserRole">FACULTY</span>)</span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Faculty & Admin Dashboard</h1>
+        <p class="page-description">Overview of academic enrollment and institutional attendance metrics</p>
+      </div>
+      <div>
+        <a href="mark-attendance.html" class="btn btn-primary">+ Mark Attendance</a>
+      </div>
+    </div>
+
+    <div id="dashboardAlert"></div>
+
+    <!-- 4 Key Metric Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Students</div>
+        <div class="stat-value" id="statTotalStudents">-</div>
+        <div class="stat-meta">Active enrolled scholars</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Total Subjects</div>
+        <div class="stat-value" id="statTotalSubjects">-</div>
+        <div class="stat-meta">Curriculum courses</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Total Faculty</div>
+        <div class="stat-value" id="statTotalFaculty">-</div>
+        <div class="stat-meta">Teaching instructors</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Today's Attendance</div>
+        <div class="stat-value" id="statTodayAttendance">-</div>
+        <div class="stat-meta">Entries logged today</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions Card -->
+    <div class="card">
+      <h2 class="card-title">Quick Actions</h2>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <a href="students.html?action=add" class="btn btn-outline">Add Student</a>
+        <a href="subjects.html?action=add" class="btn btn-outline">Add Subject</a>
+        <a href="mark-attendance.html" class="btn btn-primary">Mark Daily Attendance</a>
+        <a href="attendance-reports.html" class="btn btn-outline">Generate Reports</a>
+        <a href="attendance-records.html" class="btn btn-outline">View Attendance Log</a>
+      </div>
+    </div>
+
+    <!-- Recent Attendance Records -->
+    <div class="card">
+      <div class="card-title">
+        <span>Recent Attendance Entries</span>
+        <a href="attendance-records.html" style="font-size: 0.85rem; color: var(--primary); text-decoration: none; font-weight: 500;">View All &rarr;</a>
+      </div>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Student Name</th>
+              <th>Section</th>
+              <th>Subject</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recentAttendanceTbody">
+            <tr>
+              <td colspan="5" class="empty-state">Loading recent records...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

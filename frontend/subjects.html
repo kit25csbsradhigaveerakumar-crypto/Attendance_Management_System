@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject Management - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="admin-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Oracle Academic COE</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="admin-dashboard.html">Dashboard</a></li>
+      <li><a href="students.html">Students</a></li>
+      <li><a href="subjects.html" class="active">Subjects</a></li>
+      <li><a href="mark-attendance.html">Mark Attendance</a></li>
+      <li><a href="attendance-records.html">Records</a></li>
+      <li><a href="attendance-reports.html">Reports</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Faculty</strong></span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Subject Management</h1>
+        <p class="page-description">Maintain institutional curriculum, course codes, departments, and semesters</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="openAddSubjectModal()">+ Add New Subject</button>
+      </div>
+    </div>
+
+    <div id="pageAlert"></div>
+
+    <!-- Subject Table -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 100px;">Subject Code</th>
+              <th>Subject Name</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>Semester</th>
+              <th style="text-align: right; width: 140px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="subjectsTbody">
+            <tr>
+              <td colspan="6" class="empty-state">Loading curriculum subjects...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add / Edit Subject Modal -->
+  <div class="modal-backdrop" id="subjectModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add Subject</h3>
+        <button type="button" class="modal-close" onclick="closeSubjectModal()">&times;</button>
+      </div>
+      <form id="subjectForm" onsubmit="handleSaveSubject(event)">
+        <input type="hidden" id="subjectId" value="">
+        <div class="modal-body">
+          <div id="modalAlert"></div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 0.8;">
+              <label class="form-label" for="inputCode">Subject Code *</label>
+              <input type="text" id="inputCode" class="form-control" placeholder="e.g. CS301" required>
+            </div>
+            <div class="form-group" style="flex: 1.5;">
+              <label class="form-label" for="inputName">Subject Name *</label>
+              <input type="text" id="inputName" class="form-control" placeholder="e.g. Database Systems" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputDept">Department *</label>
+            <select id="inputDept" class="form-control" required>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Information Technology">Information Technology</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inputYear">Year of Study *</label>
+              <select id="inputYear" class="form-control" required>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3" selected>3rd Year</option>
+                <option value="4">4th Year</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inputSemester">Semester *</label>
+              <select id="inputSemester" class="form-control" required>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5" selected>Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeSubjectModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveSubject">Save Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/subjects.js"></script>
+</body>
+</html>

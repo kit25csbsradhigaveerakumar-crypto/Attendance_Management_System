@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="student-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Student Portal</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="student-dashboard.html" class="active">My Dashboard</a></li>
+      <li><a href="student-attendance.html">Attendance History</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Student</strong> (STUDENT)</span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title" id="welcomeTitle">Welcome to Student Portal</h1>
+        <p class="page-description" id="studentMetaInfo">Department of Computer Science & Engineering</p>
+      </div>
+      <div>
+        <a href="student-attendance.html" class="btn btn-outline">View Detailed History &rarr;</a>
+      </div>
+    </div>
+
+    <div id="studentAlert"></div>
+
+    <!-- Overall Attendance Metric Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Overall Attendance</div>
+        <div class="stat-value" id="statOverallPct">0.00%</div>
+        <div class="stat-meta" id="statCategoryBadge">-</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Enrolled Subjects</div>
+        <div class="stat-value" id="statTotalSubjects">0</div>
+        <div class="stat-meta">Active academic courses</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Classes Attended</div>
+        <div class="stat-value" id="statAttended" style="color: #059669;">0</div>
+        <div class="stat-meta">Total present sessions</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Classes Absent</div>
+        <div class="stat-value" id="statAbsent" style="color: #dc2626;">0</div>
+        <div class="stat-meta">Missed lecture sessions</div>
+      </div>
+    </div>
+
+    <!-- Subject-Wise Attendance Card -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div style="padding: 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="card-title" style="margin-bottom: 0;">Subject-Wise Attendance Breakdown</h2>
+        <span style="font-size: 0.8rem; color: var(--text-light);">Eligibility Threshold: 75%</span>
+      </div>
+      <div class="table-responsive" style="border: none;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 110px;">Subject Code</th>
+              <th>Subject Name</th>
+              <th style="text-align: center; width: 100px;">Total Classes</th>
+              <th style="text-align: center; width: 90px;">Present</th>
+              <th style="text-align: center; width: 90px;">Absent</th>
+              <th style="text-align: right; width: 110px;">Percentage</th>
+              <th style="text-align: center; width: 140px;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="studentSubjectTbody">
+            <tr>
+              <td colspan="7" class="empty-state">Loading your course attendance metrics...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/student.js"></script>
+</body>
+</html>

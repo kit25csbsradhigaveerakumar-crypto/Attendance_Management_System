@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="admin-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Oracle Academic COE</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="admin-dashboard.html">Dashboard</a></li>
+      <li><a href="students.html" class="active">Students</a></li>
+      <li><a href="subjects.html">Subjects</a></li>
+      <li><a href="mark-attendance.html">Mark Attendance</a></li>
+      <li><a href="attendance-records.html">Records</a></li>
+      <li><a href="attendance-reports.html">Reports</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Faculty</strong></span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Student Management</h1>
+        <p class="page-description">Maintain enrolled scholars, departments, academic cohorts, and course assignments</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="openAddStudentModal()">+ Add New Student</button>
+      </div>
+    </div>
+
+    <div id="pageAlert"></div>
+
+    <!-- Filter Toolbar -->
+    <div class="toolbar">
+      <div class="form-group">
+        <label class="form-label" for="filterSearch">Search Name / Email</label>
+        <input type="text" id="filterSearch" class="form-control" placeholder="Type to filter..." oninput="loadStudents()">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="filterDept">Department</label>
+        <select id="filterDept" class="form-control" onchange="loadStudents()">
+          <option value="">All Departments</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Information Technology">Information Technology</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="filterYear">Year of Study</label>
+        <select id="filterYear" class="form-control" onchange="loadStudents()">
+          <option value="">All Years</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="filterSection">Section</label>
+        <select id="filterSection" class="form-control" onchange="loadStudents()">
+          <option value="">All Sections</option>
+          <option value="A">Section A</option>
+          <option value="B">Section B</option>
+        </select>
+      </div>
+
+      <div>
+        <button class="btn btn-outline" onclick="resetFilters()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Student Table -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">ID</th>
+              <th>Student Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>Section</th>
+              <th style="text-align: right; width: 140px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTbody">
+            <tr>
+              <td colspan="7" class="empty-state">Loading student directory...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add / Edit Student Modal -->
+  <div class="modal-backdrop" id="studentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add Student</h3>
+        <button type="button" class="modal-close" onclick="closeStudentModal()">&times;</button>
+      </div>
+      <form id="studentForm" onsubmit="handleSaveStudent(event)">
+        <input type="hidden" id="studentId" value="">
+        <div class="modal-body">
+          <div id="modalAlert"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputName">Full Name *</label>
+            <input type="text" id="inputName" class="form-control" placeholder="e.g. Aarav Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputEmail">Email Address *</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="student@student.edu" required>
+          </div>
+
+          <div class="form-group" id="pwdGroup">
+            <label class="form-label" for="inputPassword">Account Password *</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Enter secure password">
+            <small style="color: var(--text-light); font-size: 0.75rem;" id="pwdHelp">Required when creating a new student account.</small>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inputDept">Department *</label>
+              <select id="inputDept" class="form-control" required>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inputYear">Year of Study *</label>
+              <select id="inputYear" class="form-control" required>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3" selected>3rd Year</option>
+                <option value="4">4th Year</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inputSection">Section *</label>
+              <select id="inputSection" class="form-control" required>
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Enroll In Subjects</label>
+            <div id="subjectCheckboxes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; max-height: 140px; overflow-y: auto; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius);">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeStudentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveStudent">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/students.js"></script>
+</body>
+</html>

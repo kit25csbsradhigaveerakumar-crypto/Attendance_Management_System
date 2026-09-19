@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Records - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="admin-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Oracle Academic COE</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="admin-dashboard.html">Dashboard</a></li>
+      <li><a href="students.html">Students</a></li>
+      <li><a href="subjects.html">Subjects</a></li>
+      <li><a href="mark-attendance.html">Mark Attendance</a></li>
+      <li><a href="attendance-records.html" class="active">Records</a></li>
+      <li><a href="attendance-reports.html">Reports</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Faculty</strong></span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Attendance Records Log</h1>
+        <p class="page-description">Detailed audit log of all recorded attendance entries across dates and courses</p>
+      </div>
+    </div>
+
+    <div id="recordsAlert"></div>
+
+    <!-- Filters -->
+    <div class="toolbar">
+      <div class="form-group">
+        <label class="form-label" for="filterRecordDate">Date</label>
+        <input type="date" id="filterRecordDate" class="form-control" onchange="loadRecords()">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="filterRecordStudent">Student</label>
+        <select id="filterRecordStudent" class="form-control" onchange="loadRecords()">
+          <option value="">All Students</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="filterRecordSubject">Subject</label>
+        <select id="filterRecordSubject" class="form-control" onchange="loadRecords()">
+          <option value="">All Subjects</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="filterRecordStatus">Status</label>
+        <select id="filterRecordStatus" class="form-control" onchange="loadRecords()">
+          <option value="">All Statuses</option>
+          <option value="PRESENT">Present Only</option>
+          <option value="ABSENT">Absent Only</option>
+        </select>
+      </div>
+
+      <div>
+        <button class="btn btn-outline" onclick="resetRecordFilters()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Records Table -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 110px;">Date</th>
+              <th>Student Name</th>
+              <th>Section</th>
+              <th>Subject</th>
+              <th style="width: 120px;">Status</th>
+              <th>Marked By</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTbody">
+            <tr>
+              <td colspan="6" class="empty-state">Loading attendance records...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/attendance.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initAttendanceRecordsPage();
+    });
+  </script>
+</body>
+</html>

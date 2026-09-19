@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance History - Student Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="student-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Student Portal</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="student-dashboard.html">My Dashboard</a></li>
+      <li><a href="student-attendance.html" class="active">Attendance History</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Student</strong> (STUDENT)</span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Personal Attendance History</h1>
+        <p class="page-description">Complete chronological record of all your marked lecture sessions</p>
+      </div>
+      <div>
+        <a href="student-dashboard.html" class="btn btn-outline">&larr; Back to Dashboard</a>
+      </div>
+    </div>
+
+    <div id="studentHistoryAlert"></div>
+
+    <!-- Attendance Percentage Summary Banner -->
+    <div class="card" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; background: var(--bg-main);">
+      <div>
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Cumulative Attendance Performance:</span>
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);" id="historyOverallPct">0.00%</div>
+      </div>
+      <div id="historyCategoryTag">
+        <!-- Badge -->
+      </div>
+    </div>
+
+    <!-- Subject Filter -->
+    <div class="toolbar">
+      <div class="form-group" style="max-width: 320px;">
+        <label class="form-label" for="historySubjectFilter">Filter by Subject</label>
+        <select id="historySubjectFilter" class="form-control" onchange="loadStudentAttendanceHistory()">
+          <option value="">All Enrolled Subjects</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-outline" onclick="resetHistoryFilter()">Reset Filter</button>
+      </div>
+    </div>
+
+    <!-- History Table -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 120px;">Date</th>
+              <th style="width: 120px;">Subject Code</th>
+              <th>Subject Name</th>
+              <th style="width: 120px; text-align: center;">Status</th>
+              <th>Faculty Instructor</th>
+            </tr>
+          </thead>
+          <tbody id="studentHistoryTbody">
+            <tr>
+              <td colspan="5" class="empty-state">Loading your attendance records...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/student.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initStudentAttendanceHistoryPage();
+    });
+  </script>
+</body>
+</html>

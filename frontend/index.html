@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background-color: #ffffff;">
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>Attendance Portal</h1>
+        <p>Oracle Database COE Academic System</p>
+      </div>
+
+      <div class="role-switcher">
+        <button type="button" class="role-btn active" id="btnRoleFaculty" onclick="selectRole('faculty')">Faculty / Admin</button>
+        <button type="button" class="role-btn" id="btnRoleStudent" onclick="selectRole('student')">Student</button>
+      </div>
+
+      <div id="loginAlert"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <input type="hidden" id="selectedRole" value="faculty">
+
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="form-control" placeholder="name@college.edu" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="Enter password" required>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <button type="submit" class="btn btn-primary" id="btnSubmitLogin" style="width: 100%;">Sign In</button>
+        </div>
+      </form>
+
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-light); text-align: center;">
+        <p><strong>Demo Credentials:</strong></p>
+        <p>Faculty: <code>rajesh.sharma@college.edu</code> / <code>faculty123</code></p>
+        <p>Student: <code>aarav.sharma@student.edu</code> / <code>student123</code></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

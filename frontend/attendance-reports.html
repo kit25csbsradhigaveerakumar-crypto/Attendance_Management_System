@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Reports - Attendance Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-section">
+      <a href="admin-dashboard.html" class="brand-title">AttendanceMS</a>
+      <span class="brand-subtitle">Oracle Academic COE</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="admin-dashboard.html">Dashboard</a></li>
+      <li><a href="students.html">Students</a></li>
+      <li><a href="subjects.html">Subjects</a></li>
+      <li><a href="mark-attendance.html">Mark Attendance</a></li>
+      <li><a href="attendance-records.html">Records</a></li>
+      <li><a href="attendance-reports.html" class="active">Reports</a></li>
+    </ul>
+
+    <div class="user-nav-section">
+      <span class="user-tag"><strong id="navUserName">Faculty</strong></span>
+      <button class="btn-logout" id="btnLogout">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Institutional Attendance Reports</h1>
+        <p class="page-description">Aggregated academic metrics evaluated via Oracle View <code>STUDENT_ATTENDANCE_VIEW</code></p>
+      </div>
+      <div>
+        <button class="btn btn-outline" onclick="window.print()">Print Report</button>
+      </div>
+    </div>
+
+    <div id="reportsAlert"></div>
+
+    <!-- Filter Toolbar -->
+    <div class="toolbar">
+      <div class="form-group">
+        <label class="form-label" for="reportFilterStudent">Filter by Student</label>
+        <select id="reportFilterStudent" class="form-control" onchange="loadReports()">
+          <option value="">All Students</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="reportFilterSubject">Filter by Subject</label>
+        <select id="reportFilterSubject" class="form-control" onchange="loadReports()">
+          <option value="">All Subjects</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="reportFilterCategory">Eligibility Category</label>
+        <select id="reportFilterCategory" class="form-control" onchange="loadReports()">
+          <option value="">All Categories</option>
+          <option value="Good Attendance">Good Attendance (&ge; 75%)</option>
+          <option value="Low Attendance">Low Attendance (60% - 74%)</option>
+          <option value="Critical Attendance">Critical Attendance (&lt; 60%)</option>
+        </select>
+      </div>
+
+      <div>
+        <button class="btn btn-outline" onclick="resetReportFilters()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Attendance Category Legend -->
+    <div style="display: flex; gap: 1.5rem; margin-bottom: 1rem; padding: 0.75rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius); font-size: 0.8rem; align-items: center;">
+      <span style="font-weight: 600; color: var(--text-muted);">Criteria:</span>
+      <span><span class="badge badge-good">&ge; 75%</span> Eligible / Good</span>
+      <span><span class="badge badge-low">60% - 74.9%</span> Low Attendance</span>
+      <span><span class="badge badge-critical">&lt; 60%</span> Critical Attendance</span>
+    </div>
+
+    <!-- Reports Table -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Department</th>
+              <th style="width: 70px;">Section</th>
+              <th>Subject</th>
+              <th style="text-align: center; width: 90px;">Total Classes</th>
+              <th style="text-align: center; width: 80px;">Present</th>
+              <th style="text-align: center; width: 80px;">Absent</th>
+              <th style="text-align: right; width: 110px;">Percentage</th>
+              <th style="text-align: center; width: 140px;">Category</th>
+            </tr>
+          </thead>
+          <tbody id="reportsTbody">
+            <tr>
+              <td colspan="9" class="empty-state">Loading attendance analytics...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>
